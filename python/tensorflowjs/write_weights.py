@@ -113,9 +113,7 @@ def write_weights(
 
   manifest = []
 
-  for group_index, group in enumerate(weight_groups):
-    for e in group: 
-      _auto_convert_weight_entry(e) # needed to run this conversion here because some groups are ignored after quantization
+  for group_index, group in enumerate(weight_groups):      
     if quantization_dtype:
       group = [_quantize_entry(e, quantization_dtype) for e in group]
     group_bytes, total_bytes, _ = _stack_group_bytes(group)
@@ -167,6 +165,7 @@ def _quantize_entry(entry, quantization_dtype):
                            'original_dtype': 'float32'}
         }
   """
+  _auto_convert_weight_entry(e) # needed to run this conversion here because some groups are ignored after quantization
   data = entry['data']
   quantized_entry = entry.copy()
   if data.size != 0: # it crashes without this check because of numpy
