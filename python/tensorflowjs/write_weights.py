@@ -165,7 +165,7 @@ def _quantize_entry(entry, quantization_dtype):
                            'original_dtype': 'float32'}
         }
   """
-  _auto_convert_weight_entry(e) # needed to run this conversion here because some groups are ignored after quantization
+  _auto_convert_weight_entry(entry) # needed to run this conversion here because some groups are ignored after quantization
   data = entry['data']
   quantized_entry = entry.copy()
   if data.size != 0: # it crashes without this check because of numpy
